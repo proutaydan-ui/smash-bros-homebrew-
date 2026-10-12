@@ -1,0 +1,18 @@
+name: Build 3DS
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: devkitpro/devkitarm
+    steps:
+      - uses: actions/checkout@v4
+      - name: Installer les outils 3DS
+        run: dkp-pacman -Syu --noconfirm --needed 3ds-dev
+      - name: Compiler
+        run: make
+      - uses: actions/upload-artifact@v4
+        with:
+          name: saute-saute-arena-3ds
+          path: saute-saute-arena.3dsx
